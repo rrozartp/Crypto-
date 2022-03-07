@@ -70,9 +70,28 @@
                       bëhen ndërmjet përdoruesve direkt përmes përdorimit të kriptografisë një ndërmjetës.
                        Këto transaksione verifikohen nga nyjet e rrjetit dhe regjistrohen në një libër të pandryshueshëm 
                        të shpërndarë publik të quajtur një bllokkëndësh</p>
+                       <table>
+                           <tr>
+                               <td>#</td>
+                               <td>Name</td>
+                               <td>Price</td>
+                               <td>Symbol</td>
+                           </tr>
+                           <tr>
+                            <td>1</td>
+                            <td>Bitcoin</td>
+                            <td id="bitcoin-price">---</td>
+                            <td>BTC</td>
+                           </tr>
+                       </table>
 
             </div>
         </div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
 
         <div class="col-2-reverse">
             <div class="ethereum">
@@ -87,9 +106,30 @@
                     me funksionalitet të kontratës inteligjente . Etheri 
                     është kriptomonedha vendase e platformës. Ndër kriptovalutat, Ether është 
                     i dyti vetëm pas Bitcoin në kapitalizimin e tregut .</p>
+                    <table>
+                        <tr>
+                            <td>#</td>
+                            <td>Name</td>
+                            <td>Price</td>
+                            <td>Symbol</td>
+                        </tr>
+                        <tr>
+                         <td>2</td>
+                         <td>Ethereum</td>
+                         <td id="ethereum-price">---</td>
+                         <td>ETH</td>
+                        </tr>
+                    </table>
 
             </div>
         </div>
+
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+
 
         <div class="col-2">
             <div class="solana">
@@ -107,6 +147,21 @@
                      pretendon se përmirëson efikasitetin.Në vitin 2021, gazetarja e Bloomberg , 
                      Joanna Ossinger e përshkroi Solanën si "një rival potencial afatgjatë për Ethereum ", 
                      duke përmendur shpejtësitë më të larta të transaksionit dhe kostot më të ulëta të lidhura.</p>
+
+                     <!-- <table>
+                        <tr>
+                            <td>#</td>
+                            <td>Name</td>
+                            <td>Price</td>
+                            <td>Symbol</td>
+                        </tr>
+                        <tr>
+                         <td>3</td>
+                         <td>Solana</td>
+                         <td id="solana-price">---</td>
+                         <td>SOL</td>
+                        </tr>
+                    </table> -->
 
             </div>
         </div>
@@ -127,6 +182,20 @@
                      me frekuencë të lartë . Binance fillimisht ishte i bazuar në Kinë, por më vonë e zhvendosi selinë 
                      e tij jashtë Kinës pas rregullimit në rritje të qeverisë kineze për kriptomonedhën .
                     .</p>
+                            <!-- <table>
+                                <tr>
+                                    <td>#</td>
+                                    <td>Name</td>
+                                    <td>Price</td>
+                                    <td>Symbol</td>
+                                </tr>
+                                <tr>
+                                 <td>4</td>
+                                 <td>Binance Coin</td>
+                                 <td id="binance-price">---</td>
+                                 <td>BNB</td>
+                                </tr>
+                            </table> -->
 
             </div>
         </div>
@@ -298,6 +367,62 @@
     </div>
     </footer>
     <!----footer-->
+
+    <script>
+
+        let ws = new WebSocket('wss://stream.binance.com:9443/ws/etheur@trade');
+        let stockPriceElement = document.getElementById('ethereum-price')
+        let lastPrice = null;
+
+        ws.onmessage = (event) => {
+            let stockObject = JSON.parse(event.data);
+            let price =  parseFloat(stockObject.p).toFixed(2);
+            
+            
+            stockPriceElement.innerText = price;
+            stockPriceElement.style.color = !lastPrice || lastPrice === price ? 'black' : price > lastPrice ? 'green' : 'red';
+            lastPrice = price;
+        }
+
+        let wss = new WebSocket('wss://stream.binance.com:9443/ws/btceur@trade');
+        let bitcoinPriceElement = document.getElementById('bitcoin-price')
+        let lastPricee = null;
+
+        wss.onmessage = (event) => {
+            let bitcoinObject = JSON.parse(event.data);
+            let price = parseFloat(bitcoinObject.p).toFixed(2);
+
+            bitcoinPriceElement.innerText = price;
+            bitcoinPriceElement.style.color = !lastPrice || lastPrice === price ? 'black' : price > lastPrice ? 'green' : 'red';
+            lastPricee = price;
+        }
+
+        /* let wsss = new WebSocket('wss://stream.binance.com:9443/ws/soleur@trade');
+        let solanaPriceElement = document.getElementById('solana-price')
+        let lastPriceee = null;
+
+        wsss.onmessage = (event) => {
+            let solanaObject = JSON.parse(event.data);
+            let price = parseFloat(solanaObject.p).toFixed(2);
+
+            solanaPriceElement.innerText = price;
+            solanaPriceElement.style.color = !lastPrice || lastPrice === price ? 'black' : price > lastPrice ? 'green' : 'red';
+            lastPriceee = price;
+        }
+
+        let wssss = new WebSocket('wss://stream.binance.com:9443/ws/bnbeur@trade');
+        let binancePriceElement = document.getElementById('binance-price')
+        let lastPriceeee = null;
+
+        wsss.onmessage = (event) => {
+            let binanceObject = JSON.parse(event.data);
+            let price = parseFloat(binanceObject.p).toFixed(2);
+
+            binancePriceElement.innerText = price;
+            binancePriceElement.style.color = !lastPrice || lastPrice === price ? 'black' : price > lastPrice ? 'green' : 'red';
+            lastPriceeee = price;
+        } */
+    </script>
     
 </body>
 </html>
